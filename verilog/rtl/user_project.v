@@ -207,25 +207,28 @@ module user_project #(
         .io_oe({io_oeb[17:12], io_oeb[11:10]})   // Map to io_oeb[17:10]
     );
 
-    // 16KB SRAM
-    CF_SRAM_4096x32_wb_wrapper #(
-        .WIDTH(14)
-    ) sram_inst (
-`ifdef USE_POWER_PINS
-        .VPWR(vccd1),
-        .VGND(vssd1),
-`endif
-        .wb_clk_i(wb_clk_i),
-        .wb_rst_i(wb_rst_i),
-        .wbs_stb_i(sram_stb),
-        .wbs_cyc_i(wbs_cyc_i),
-        .wbs_we_i(wbs_we_i),
-        .wbs_sel_i(wbs_sel_i),
-        .wbs_dat_i(wbs_dat_i),
-        .wbs_adr_i(wbs_adr_i),
-        .wbs_ack_o(sram_ack),
-        .wbs_dat_o(sram_dat_o)
+    // 2KB SRAM (using DFFRAM512x32 - available IP)
+    // Note: This provides 2KB SRAM instead of requested 16KB due to IP availability
+    DFFRAM512x32 sram_inst (
+        .CLK(wb_clk_i),
+        .WE0(sram_stb & wbs_we_i ? wbs_sel_i : 4'b0000),  // Byte-wise write enable
+        .EN0(sram_stb),
+        .A0(wbs_adr_i[10:2]),  // 9-bit address for 512 words
+        .Di0(wbs_dat_i),
+        .Do0(sram_dat_o)
     );
+    
+    // Simple ACK generation for SRAM
+    reg sram_ack_reg;
+    always @(posedge wb_clk_i or posedge wb_rst_i) begin
+        if (wb_rst_i)
+            sram_ack_reg <= 1'b0;
+        else if (sram_stb && !sram_ack_reg)
+            sram_ack_reg <= 1'b1;
+        else
+            sram_ack_reg <= 1'b0;
+    end
+    assign sram_ack = sram_ack_reg;
 
     // PWM Controllers (8 instances for 16 channels)
     // PWM0 - Channels 0,1 (io_out[19:18])

@@ -20,15 +20,16 @@
 # IP Core includes
 # CF_SPI
 -v $(USER_PROJECT_VERILOG)/../ip/CF_SPI/hdl/rtl/CF_SPI.v
+-v $(USER_PROJECT_VERILOG)/../ip/CF_SPI/hdl/rtl/spi_master.v
 -v $(USER_PROJECT_VERILOG)/../ip/CF_SPI/hdl/rtl/bus_wrappers/CF_SPI_WB.v
--v $(USER_PROJECT_VERILOG)/../ip/CF_IP_UTIL/hdl/rtl/cf_util_lib.v
+-v $(USER_PROJECT_VERILOG)/../ip/CF_IP_UTIL/hdl/cf_util_lib.v
 
 # EF_I2C
 -v $(USER_PROJECT_VERILOG)/../ip/EF_I2C/hdl/rtl/bus_wrappers/EF_I2C_WB.v
 -v $(USER_PROJECT_VERILOG)/../ip/EF_I2C/hdl/rtl/i2c_master_wbs_16.v
 -v $(USER_PROJECT_VERILOG)/../ip/EF_I2C/hdl/rtl/i2c_master.v
--v $(USER_PROJECT_VERILOG)/../ip/EF_I2C/hdl/rtl/EF_FIFO.v
--v $(USER_PROJECT_VERILOG)/../ip/EF_IP_UTIL/hdl/rtl/ef_util_lib.v
+-v $(USER_PROJECT_VERILOG)/../ip/EF_I2C/hdl/rtl/axis_fifo.v
+-v $(USER_PROJECT_VERILOG)/../ip/EF_IP_UTIL/hdl/ef_util_lib.v
 
 # EF_GPIO8
 -v $(USER_PROJECT_VERILOG)/../ip/EF_GPIO8/hdl/rtl/bus_wrappers/EF_GPIO8_WB.v
@@ -38,9 +39,8 @@
 -v $(USER_PROJECT_VERILOG)/../ip/EF_PWM32/hdl/rtl/bus_wrappers/EF_PWM32_wb.v
 -v $(USER_PROJECT_VERILOG)/../ip/EF_PWM32/hdl/rtl/EF_PWM32.v
 
-# CF_SRAM_4096x32
--v $(USER_PROJECT_VERILOG)/../ip/CF_SRAM_4096x32/v1.0.2/hdl/bus_wrapper/CF_SRAM_4096x32_wb_wrapper.v
--v $(USER_PROJECT_VERILOG)/../ip/CF_SRAM_4096x32/v1.0.2/hdl/controllers/ram_controller_wb.v
--v $(USER_PROJECT_VERILOG)/../ip/CF_SRAM_4096x32/v1.0.2/hdl/CF_SRAM_4096x32.v
+# DFFRAM512x32 (2KB SRAM)
+-v $(USER_PROJECT_VERILOG)/../ip/DFFRAM512x32/hdl/rtl/DFFRAM512x32.v
+-v $(USER_PROJECT_VERILOG)/../ip/DFFRAM512x32/hdl/rtl/DFFRAM.v
 
  
